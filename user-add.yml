@@ -1,0 +1,25 @@
+---
+- name: user management
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: create user group
+    group:
+      name: <username>
+      state: present
+      system: no
+  - name: add user to servers
+    user:
+      name: <username>
+      comment: <username>
+      shell: /bin/bash
+      groups: <username>
+      append: yes
+  - name: create .ssh folder
+    file:
+      path: ~<username>/.ssh
+      state: directory
+      owner: <username>
+      group: <username>
+      mode: 0700

@@ -1,0 +1,12 @@
+---
+- name: transfer user public key
+  hosts: all
+  become: yes 
+  
+  tasks:
+  - name: Set authorized key taken from file
+    authorized_key:
+      user: <username>
+      state: present
+      exclusive: no
+      key: "{{ lookup('file', '/home/centos/pubkey-dist/<username>-public-key.txt') }}"
